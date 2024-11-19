@@ -6,26 +6,25 @@
 #include "Blueprint/UserWidget.h"
 #include "VHealthBarWidget.generated.h"
 
-/**
- * 
- */
+class UProgressBar;
+class UTextBlock;
+class UVHealthComponent;
+
 UCLASS()
 class HEALTHBARS_API UVHealthBarWidget : public UUserWidget
 {
 	GENERATED_BODY()
-	
-	TWeakObjectPtr<class UVHealthComponent> TargetHealthComponent;
-
+	TWeakObjectPtr<UVHealthComponent> TargetHealthComponent;
+	 
 	UFUNCTION()
-	void OnHealthChanged(int32 NewHealth, int32 MaxHealth);
-protected:
-	UPROPERTY(EditAnywhere, meta = (BindWidget))
-	class UProgressBar* HealthProgressBar;
-
-	UPROPERTY(EditAnywhere, meta = (BindWidget))
-	class UTextBlock* HealthTextBlock;
-
+	void OnHealthChanged(float NewHealth, float MaxHealth);
 	
+protected:
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	TObjectPtr<UProgressBar> HealthProgressBar;
+	 
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	TObjectPtr<UTextBlock> HealthTextBlock;
 public:
 	UFUNCTION(BlueprintCallable)
 	void SetTargetHealthComponent(UVHealthComponent* NewHealthComponent);
